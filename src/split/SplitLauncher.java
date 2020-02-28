@@ -57,7 +57,7 @@ public class SplitLauncher {
             splitter = new Split(ofile, flagD, Split.TypeNum.Strings, 100);
 
         try {
-            int result = splitter.splitFile(inputFileName);
+            long result = splitter.splitFile(inputFileName);
             System.out.println("Total of " + result + " files created");
         } catch (IOException e) {
             System.err.println(e.getMessage());
