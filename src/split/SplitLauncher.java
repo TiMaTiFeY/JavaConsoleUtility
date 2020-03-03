@@ -22,7 +22,7 @@ public class SplitLauncher {
     private long maxCountFiles;
 
     @Option(name = "-o", metaVar = "Num", usage = "Set default name of output file")
-    private String ofile;
+    private String ofile = "x";
 
     @Argument(required = true, metaVar = "InputName", usage = "Input file name")
     private String inputFileName;
@@ -43,8 +43,7 @@ public class SplitLauncher {
             return;
         }
 
-        if (ofile == null) ofile = "x";
-            else if (ofile.equals("-")) ofile = inputFileName;
+        if (ofile.equals("-")) ofile = inputFileName;
 
         Split splitter;
         if (maxLenStrings != 0)
