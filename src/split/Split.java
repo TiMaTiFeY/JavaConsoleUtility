@@ -7,7 +7,6 @@ public class Split {
     public enum TypeNum {Strings, Chars, Files}
 
     private final String ofile;
-    private final boolean flagD;
     private final TypeNum typeNum;
     private long num;
 
@@ -18,7 +17,6 @@ public class Split {
 
     public Split(String ofile, boolean flagD, TypeNum typeNum, long num) {
         this.ofile = ofile;
-        this.flagD = flagD;
         this.typeNum = typeNum;
         this.num = num;
 
@@ -32,7 +30,7 @@ public class Split {
         return (char) ((int) ch + 1);
     }
 
-    public String nextPostfix(String str) {
+    private String nextPostfix(String str) {
         int lastIndex = str.length() - 1;
         if (typeNum != TypeNum.Files) {
             String mainSlice = str.substring(lenPrefix, lastIndex + 1);
@@ -52,7 +50,7 @@ public class Split {
     public long splitFile(String inputFileName) throws IOException {
         long numReads = num;
         long numRemainingRead = 0;
-
+        int len = 2;
         if (typeNum == TypeNum.Files) {
             try (FileInputStream in = new FileInputStream(inputFileName)) {
                 long inputCountChars = 0;
@@ -66,9 +64,6 @@ public class Split {
                 numReads = inputCountChars / num;
                 numRemainingRead = inputCountChars % num;
             }
-        }
-        int len = 2;
-        if (typeNum == TypeNum.Files) {
             len = 1;
             int lenS = lastChar - firstChar + 1;
             long maxLen = lenS;
@@ -80,7 +75,6 @@ public class Split {
         String postfix = ("" + firstChar).repeat(len);
         String outFileName = ofile + postfix;
         int countFiles = 0;
-
         try (InputStreamReader reader = new InputStreamReader(new FileInputStream(inputFileName))) {
             int sym = reader.read();
             while (sym != -1) {
